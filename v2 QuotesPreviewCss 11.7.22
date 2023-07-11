@@ -1,0 +1,16 @@
+      @page
+    
+                {
+    size:A4 portrait;
+    margin-left: 1cm;
+    margin-right: 1cm;
+    margin-bottom: 1.9cm;
+                   @bottom-left
+                   {
+                        content: element(footer);
+                   }
+                }
+         div.footer 
+                {
+                    position: running(footer);
+                }
