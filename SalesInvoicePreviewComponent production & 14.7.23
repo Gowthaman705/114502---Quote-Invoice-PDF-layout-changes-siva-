@@ -1,0 +1,213 @@
+<apex:component access="global" allowDML="true"   >
+    <apex:attribute name="Sales_Invoice__c" type="Sales_Invoice__c" description="Freight Object" required="required" />
+    <apex:attribute name="RconfId" type="Id" description="Attribute on the component." />
+    <apex:stylesheet value="{!URLFOR($Resource.previewstyles)}" />
+    <head>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>        
+    </head> 
+    <apex:stylesheet value="{!$Resource.SalesINvoiceCssTest}"/>
+    <div class="header">
+        <apex:image url="/resource/1466142737000/QuotesLogo" /> 
+        <div style="position:absolute;left:500px;top:40px;">
+            <p class="padd"> 28 Buckland Road, Pen Mill Trading Estate Yeovil,<br/> Somerset BA21 5HA <br/>T: 01935 474602  accounts@stqvantage.co.uk <br/><ws><b style="color:#ABC14D;">www.stqvantage.co.uk</b></ws> </p>
+            <b style="color:#414141;font-family:Helvetica, sans-serif;font-size:19.5px;">Sales Invoice</b>
+        </div>
+    </div><br /><br /><br /><br /><br /><br /><br />
+    
+    <!-- ADDRESS -->
+    <table  border="0" width="100%" style="color:#414141;font-size:14.5px;font-family:Helvetica, sans-serif;">
+        <tr valign="baseline">
+            <td width="50%">
+                <p style="color:#414141;font-size:14.5px;font-family:Helvetica, sans-serif;"> <b style="color:#ABC14D;">Account Address:</b><br/>
+                    <apex:outputPanel rendered="{!!Sales_Invoice__c.Edit_Existing_Billing_Address__c}"><apex:outputField value="{!Sales_Invoice__c.Sales_Order__r.Quote__r.Account__r.Name}"/><br/></apex:outputPanel>
+                    <apex:outputPanel rendered="{!if(Sales_Invoice__c.Edit_Existing_Billing_Address__c!=true,true,false)}">
+                        <apex:outputPanel rendered="{!if(Sales_Invoice__c.Sales_Order__r.Quote__r.Account__r.BillingStreet!=null,true,false)}"><apex:outputText rendered="{!contains(Sales_Invoice__c.Sales_Order__r.Quote__r.Account__r.BillingStreet,',')}" value="{!SUBSTITUTE(JSENCODE(Sales_Invoice__c.Sales_Order__r.Quote__r.Account__r.BillingStreet),',','<br/>')}" escape="false"/><apex:outputField rendered="{!!contains(Sales_Invoice__c.Sales_Order__r.Quote__r.Account__r.BillingStreet,',')}" value="{!Sales_Invoice__c.Sales_Order__r.Quote__r.Account__r.BillingStreet}" /><br/></apex:outputPanel>
+                        <apex:outputPanel rendered="{!if(Sales_Invoice__c.Sales_Order__r.Quote__r.Account__r.BillingCity!=null,true,false)}"><apex:outputText value="{!Sales_Invoice__c.Sales_Order__r.Quote__r.Account__r.BillingCity}"></apex:outputText><br/></apex:outputPanel>
+                        <apex:outputPanel rendered="{!if(Sales_Invoice__c.Sales_Order__r.Quote__r.Account__r.BillingState!=null,true,false)}"><apex:outputText value="{!Sales_Invoice__c.Sales_Order__r.Quote__r.Account__r.BillingState}"></apex:outputText><br/></apex:outputPanel>
+                        <apex:outputPanel rendered="{!if(Sales_Invoice__c.Sales_Order__r.Quote__r.Account__r.BillingPostalCode!=null,true,false)}"><apex:outputText value="{!Sales_Invoice__c.Sales_Order__r.Quote__r.Account__r.BillingPostalCode}"></apex:outputText></apex:outputPanel>
+                    </apex:outputPanel>
+                    <apex:outputPanel rendered="{!if(Sales_Invoice__c.Edit_Existing_Billing_Address__c==true,true,false)}">
+                        <apex:outputPanel rendered="{!if(Sales_Invoice__c.Billing_Street__c!=null,true,false)}">
+                            <apex:outputpanel rendered="{!if(contains(JSENCODE(Sales_Invoice__c.Billing_Street__c),'\r\n'),true,false)}">
+                                <apex:outputText value="{!SUBSTITUTE(JSENCODE(Sales_Invoice__c.Billing_Street__c ),'\r\n','<br/>')}" escape="false"></apex:outputText><br/>
+                            </apex:outputPanel>
+                            <apex:outputpanel rendered="{!if(contains(JSENCODE(Sales_Invoice__c.Billing_Street__c),','),true,false)}">
+                                <apex:outputText value="{!SUBSTITUTE(JSENCODE(Sales_Invoice__c.Billing_Street__c ),',','<br/>')}" escape="false"></apex:outputText><br/>
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                        <apex:outputPanel rendered="{!if(Sales_Invoice__c.Billing_City__c!=null,true,false)}"><apex:outputText value="{!Sales_Invoice__c.Billing_City__c}"></apex:outputText><br/></apex:outputPanel>
+                        <apex:outputPanel rendered="{!if(Sales_Invoice__c.Billing_State__c!=null,true,false)}"><apex:outputText value="{!Sales_Invoice__c.Billing_State__c}"></apex:outputText><br/></apex:outputPanel>
+                        <apex:outputPanel rendered="{!if(Sales_Invoice__c.Postal_Code__c!=null,true,false)}"><apex:outputText value="{!Sales_Invoice__c.Postal_Code__c}"></apex:outputText></apex:outputPanel>
+                    </apex:outputPanel>
+                </p>
+            </td>
+            <td width="30%">
+                <p style="color:#414141;font-size:14.5px;font-family:Helvetica, sans-serif;"><b style="color:#ABC14D;">Delivery Address:</b><br/>
+                    <apex:outputpanel rendered="{!if(Sales_Invoice__c.Sales_Order__r.Quote__r.Activity__r.Property__r.Name!=null,true,false)}" ><apex:outputText value="{!Sales_Invoice__c.Sales_Order__r.Quote__r.Activity__r.Property__r.Name}"></apex:outputText><br/></apex:outputpanel>
+                    <apex:outputpanel rendered="{!if(Sales_Invoice__c.Sales_Order__r.Quote__r.Activity__r.Property__r.Street__c!=null,true,false)}"><apex:outputField value="{!Sales_Invoice__c.Sales_Order__r.Quote__r.Activity__r.Property__r.Street__c}"/><br/></apex:outputpanel>
+                    <apex:outputPanel rendered="{!if(Sales_Invoice__c.Sales_Order__r.Quote__r.Activity__r.Property__r.Town_City__c!=null,true,false)}"><apex:outputText value="{!Sales_Invoice__c.Sales_Order__r.Quote__r.Activity__r.Property__r.Town_City__c}"></apex:outputText><br/></apex:outputPanel>
+                    <!-- <apex:outputPanel rendered="{!if(Sales_Invoice__c.Sales_Order__r.Quote__r.Activity__r.Property__r.Postcode__c!=null,true,false)}"><apex:outputText value="{!Sales_Invoice__c.Sales_Order__r.Quote__r.Activity__r.Property__r.Postcode__c}"></apex:outputText></apex:outputPanel>   -->
+                </p>
+            </td>         
+        </tr>
+    </table>
+    <!-- Order Details -->
+    
+    <br /><br /> 
+    
+    <br /><br />        
+    <table border="0" class="test" style="width:100%;border-collapse:separate;border-spacing:0;width: 728px;">
+        <tr>
+            <th width="25%" style="color:#414141;font-size:16px;font-family:Helvetica, sans-serif;text-align:left;height:100%;">Order No.</th><th width="1%"></th>
+            <th width="25%" style="color:#414141;font-size:16px;font-family:Helvetica, sans-serif;text-align:left;height:100%;">Date of Supply</th><th width="1%"></th>
+            <th width="25%" style="color:#414141;font-size:16px;font-family:Helvetica, sans-serif;text-align:left;height:100%;">Date of Invoice</th><th width="1%"></th>
+            <th width="25%" style="color:#414141;font-size:16px;font-family:Helvetica, sans-serif;text-align:left;height:100%;">Invoice No.</th>
+        </tr>
+        <tr>
+            <td style="color:#414141;font-family:Helvetica, sans-serif;text-align:left;background-color:#EEF3D5;" >{!Sales_Invoice__c.Sales_Order__r.Order_Number__c}</td><td style="background-color:white;"/>
+            <td style="color:#414141;font-family:Helvetica, sans-serif;text-align:left;background-color:#EEF3D5;">          
+                <apex:outputText value="{0,date,dd/MM/yyyy}">
+                    <apex:param value="{!Sales_Invoice__c.Date_of_Supply__c}" />
+                </apex:outputText>
+            </td><td style="background-color:white;"/>
+            <td style="color:#414141;font-family:Helvetica, sans-serif;text-align:left;background-color:#EEF3D5;">
+                <apex:outputText value="{0,date,dd/MM/yyyy}">
+                    <apex:param value="{!Sales_Invoice__c.Invoice_Date__c}" />
+                </apex:outputText>
+            </td><td style="background-color:white;"/>
+            <td style="color:#414141;font-family:Helvetica, sans-serif;text-align:left;background-color:#EEF3D5;">{!Sales_Invoice__c.name}</td>
+        </tr>
+    </table>
+    
+    <br />
+    <!-- Sales Invoice line Item-->
+    <table border="0" style="color:#414141;font-size:12px;border-collapse:collapse;table-layout: fixed;" cellspacing="0" cellpadding="3" width="50%" height="100px" >
+        <tr class ="table1">  <th width="22px" class="tt" style="border-left: 1px solid #ABC12D;font-size:15px;text-align:left;">Qty</th>
+            <!--   <th width="38px" class="tt" style="font-size:15px;">Code</th>
+-->	   
+            <th width="400px"  class="tt" style="font-size:15px;text-align: left;">Description</th>
+            <th width="70px" class="tt" style="font-size:15px;text-align: left;">Price</th>    
+            <th width="52px" class="tt" style="font-size:15px;text-align: left;">Per</th> 
+            <th width="110px"  class="tt"  style="font-size:15px;text-align:left;border-r: 1px solid #ABC12D;"><apex:outputText value="£"></apex:outputText></th>
+        </tr>
+        <apex:variable var="count" value="{!0}" />
+        <apex:repeat value="{!Sales_Invoice__c.Sales_Invoice_Line_Item__r}" var="sili"> 
+            <tr>              
+                
+                <td class="ht" valign="top" style="text-align:center;border-left: 1px solid #ABC12D;color:#414141;font-weight: normal;font-size:14.5px;"><apex:outputText rendered="{!if(OR(AND(sili.Service_Type__c!=null,sili.Item__r.name==null,sili.Goods_Services__c==null),AND(sili.Service_Type__c==null,sili.Item__r.name!=null,sili.Goods_Services__c==null),AND(sili.Service_Type__c==null,sili.Item__r.name==null,sili.Goods_Services__c!=null)),true,false)}"><br/></apex:outputText>
+                    <apex:outputText rendered="{!if(AND(sili.Service_Type__c==null,sili.Item__r.name!=null,sili.Goods_Services__c!=null),true,false)}"><br/></apex:outputText><apex:outputText rendered="{!if(OR(AND(sili.Service_Type__c!=null,sili.Item__r.name!=null,sili.Goods_Services__c==null),AND(sili.Service_Type__c!=null,sili.Item__r.name==null,sili.Goods_Services__c!=null)),true,false)}"><br/><br/><br/></apex:outputText><apex:outputText rendered="{!IF(AND(sili.Service_Type__c!=null,sili.Item__r.name!=null,sili.Goods_Services__c!=null),true,false)}"><br/><br/><br/></apex:outputText><apex:outputField value="{!sili.Quantity__c}"/> </td>
+                <!--  <td class="ht"  valign="top" style="text-align:center;border-left: 1px solid #ABC12D;font-size:14.5px;" ><apex:outputText rendered="{!if(OR(AND(sili.Service_Type__c!=null,sili.Item__r.name==null,sili.Goods_Services__c==null),AND(sili.Service_Type__c==null,sili.Item__r.name!=null,sili.Goods_Services__c==null),AND(sili.Service_Type__c==null,sili.Item__r.name==null,sili.Goods_Services__c!=null)),true,false)}"><br/></apex:outputText>
+<apex:outputText rendered="{!if(AND(sili.Service_Type__c==null,sili.Item__r.name!=null,sili.Goods_Services__c!=null),true,false)}"><br/></apex:outputText><apex:outputText rendered="{!if(OR(AND(sili.Service_Type__c!=null,sili.Item__r.name!=null,sili.Goods_Services__c==null),AND(sili.Service_Type__c!=null,sili.Item__r.name==null,sili.Goods_Services__c!=null)),true,false)}"><br/><br/><br/></apex:outputText><apex:outputText rendered="{!IF(AND(sili.Service_Type__c!=null,sili.Item__r.name!=null,sili.Goods_Services__c!=null),true,false)}"><br/><br/></apex:outputText><apex:outputField value="{!sili.Code__c}"/> </td>
+-->
+                <td   valign="top" style="border-left: 1px solid #ABC12D;border-right: 1px solid #ABC12D;color:#414141;font-family:Helvetica, sans-serif;font-size:14.5px;"><br/>
+                    <apex:outputText rendered="{!IF(sili.Service_Type__c!=null,true,false)}"><center><b>{!sili.Service_Type__c}</b></center></apex:outputText>
+                    <apex:outputText rendered="{!if(OR(AND(sili.Service_Type__c!=null,sili.Item__c!=null,sili.Goods_Services__c==null),AND(sili.Service_Type__c!=null,sili.Item__c==null,sili.Goods_Services__c!=null)),true,false)}"><br/></apex:outputText>
+                    
+                    <apex:outputText rendered="{!IF(sili.Item__c!=null,true,false)}" > <b style="color:#414141;font-family:Helvetica, sans-serif;font-size:14.5px;">{!IF((sili.Item__r.name!=null),sili.Item__r.name+":","")}</b><br/></apex:outputText>
+                    <apex:outputText rendered="{!if(sili.Include_Information__c,true,false)}" value="{!SUBSTITUTE((sili.Item__r.Description),'\n','<br/>')}" style="white-space:  pre-wrap; font-size:14.5px;line-Height:135%; " escape="false"></apex:outputText>
+                    <apex:outputText rendered="{!if(AND(sili.Goods_Services__c!=null,sili.Item__r.Description!=null,sili.Include_Information__c),true,false)}" value=" - "></apex:outputText>
+                    <apex:outputText rendered="{!IF(sili.Goods_Services__c!=null,true,false)}" value="{!SUBSTITUTE((sili.Goods_Services__c),'\n','<br/>')}" style="white-space:  pre-wrap;font-size:14.5px;line-height: 125% " escape="false"></apex:outputText> 
+                    
+                </td>
+                
+                
+                <td class="ht" style="text-align:center;color:#414141;font-family:Helvetica, sans-serif;font-size:14.5px;" valign="bottom"><apex:outputText rendered="{!if(OR(AND(sili.Service_Type__c!=null,sili.Item__r.name==null,sili.Goods_Services__c==null),AND(sili.Service_Type__c==null,sili.Item__r.name!=null,sili.Goods_Services__c==null)),true,false)}"><br/></apex:outputText>
+                    <apex:outputText rendered="{!if(AND(sili.Service_Type__c==null,sili.Item__r.name!=null,sili.Goods_Services__c!=null),true,false)}"><br/><br/></apex:outputText><apex:outputText rendered="{!if(OR(AND(sili.Service_Type__c!=null,sili.Item__r.name!=null,sili.Goods_Services__c==null),AND(sili.Service_Type__c!=null,sili.Item__r.name==null,sili.Goods_Services__c!=null)),true,false)}"><br/><br/></apex:outputText><apex:outputText rendered="{!IF(AND(sili.Service_Type__c!=null,sili.Item__r.name!=null,sili.Goods_Services__c!=null),true,false)}"><br/><br/></apex:outputText>
+                    <apex:outputPanel rendered="{!if(AND(sili.Each_Item__c==true,sili.Value__c!=0),true,false)}"><apex:outputfield value="{!sili.Value__c}"/></apex:outputPanel></td> 
+                
+                <td class="ht" style="text-align:center;color:#414141;font-family:Helvetica, sans-serif;font-size:14.5px;" valign="bottom"><apex:outputText rendered="{!if(OR(AND(sili.Service_Type__c!=null,sili.Item__r.name==null,sili.Goods_Services__c==null),AND(sili.Service_Type__c==null,sili.Item__r.name!=null,sili.Goods_Services__c==null),AND(sili.Service_Type__c==null,sili.Item__r.name==null,sili.Goods_Services__c!=null)),true,false)}"><br/></apex:outputText>
+                    <apex:outputText rendered="{!if(AND(sili.Service_Type__c==null,sili.Item__r.name!=null,sili.Goods_Services__c!=null),true,false)}"><br/><br/></apex:outputText><apex:outputText rendered="{!if(OR(AND(sili.Service_Type__c!=null,sili.Item__r.name!=null,sili.Goods_Services__c==null),AND(sili.Service_Type__c!=null,sili.Item__r.name==null,sili.Goods_Services__c!=null)),true,false)}"><br/><br/></apex:outputText><apex:outputText rendered="{!IF(AND(sili.Service_Type__c!=null,sili.Item__r.name!=null,sili.Goods_Services__c!=null),true,false)}"><br/><br/></apex:outputText>
+                    <apex:outputPanel rendered="{!if((sili.Each_Item__c==true),true,false)}"><apex:outputField value="{!sili.Per__c}"/></apex:outputPanel></td>       
+                
+                
+                <td  class="ht" style="border-right: 1px solid #ABC12D;text-align:right;color:#414141;font-family:Helvetica, sans-serif;font-size:14.5px;" valign="bottom"><apex:outputText rendered="{!if(OR(AND(sili.Service_Type__c!=null,sili.Item__r.name==null,sili.Goods_Services__c==null),AND(sili.Service_Type__c==null,sili.Item__r.name!=null,sili.Goods_Services__c==null),AND(sili.Service_Type__c==null,sili.Item__r.name==null,sili.Goods_Services__c!=null)),true,false)}"><br/></apex:outputText>
+                    <apex:outputText rendered="{!if(AND(sili.Service_Type__c==null,sili.Item__r.name!=null,sili.Goods_Services__c!=null),true,false)}"><br/><br/></apex:outputText><apex:outputText rendered="{!if(OR(AND(sili.Service_Type__c!=null,sili.Item__r.name!=null,sili.Goods_Services__c==null),AND(sili.Service_Type__c!=null,sili.Item__r.name==null,sili.Goods_Services__c!=null)),true,false)}"><br/><br/></apex:outputText><apex:outputText rendered="{!IF(AND(sili.Service_Type__c!=null,sili.Item__r.name!=null,sili.Goods_Services__c!=null),true,false)}"><br/><br/></apex:outputText>
+                    <apex:outputPanel rendered="{!if(sili.Total__c!=0,true,false)}"><apex:outputfield value="{!sili.Total__c}"/></apex:outputPanel></td>            
+                
+                
+            </tr>
+        </apex:repeat>
+    </table>  
+    
+    <!-- footer -->
+    
+    <div class="footer">
+        <div id="content" >
+            
+            <table width="100%" style="border: 1px solid black; border-collapse: collapse;margin-bottom:0px;">
+                <tr>
+                    <td class="footer_table_style"  rowspan="2" width="62%">
+                        <div style="display:{!if(Sales_Invoice__c.Vat_Type__c == 'DRC Applies' || Sales_Invoice__c.Vat_Type__c == 'Reverse VAT','display;border: 1px solid black;','none')};"> 
+                            <a style="color:red;"> Customer to account to HMRC for the DRC Applies charge output tax at the relevant&nbsp;VAT rate as shown below.</a>
+                            <br/><br/>DRC Applies @ &nbsp;<apex:outputField value="{!Sales_Invoice__c.Reverse_Vat__c}"/>
+                            <br/><br/>Payable to HMRC  &nbsp;<apex:outputField value="{!Sales_Invoice__c.Reverse_VAT_Value__c}"/>
+                        </div>
+                        
+                    </td>
+                    
+                    
+                    
+                    <td class="td_padding left_border right_border footer_table_style"  width="21%" style="  border-left: 1px solid #ABC12D;  	" >
+                        Carriage &amp; packaging
+                        
+                    </td>
+                    <td class="td_padding footer_table_style right_border" align="right"   style="   border-left: 1px solid #ABC12D; border-right: 1px solid #ABC12D">
+                        <apex:outputField value="{!Sales_Invoice__c.Full_Value_Carriage__c}"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td_padding footer_table_style right_border"  style="text-align:​center;border-left: 1px solid #ABC12D; border-right: 1px solid #ABC12D">
+                        Subtotal 
+                        <a style="color:black;display:{!if(Sales_Invoice__c.Vat_Type__c=="Non-DRC" || Sales_Invoice__c.Vat_Type__c=="Standard VAT",'','None')};"> 
+                            <br/><br/>VAT @  {!Sales_Invoice__c.VatPercentage__c}% 
+                        </a>
+                    </td> 
+                    <td class="td_padding footer_table_style right_border" align="right" style="border-left: 1px solid #ABC12D; border-right: 1px solid #ABC12D">
+                        <apex:outputField value="{!Sales_Invoice__c.Sub_total__c}"/> 
+                        
+                        <a style="color:black;display:{!if(Sales_Invoice__c.Vat_Type__c=="Non-DRC" || Sales_Invoice__c.Vat_Type__c=="Standard VAT",'','None')};">  <br/><br/>
+                            <apex:outputField value="{!Sales_Invoice__c.VAT__c}"/> 
+                        </a>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td class="footer_table_style">
+                        <!--<a style="color:red;font-size:15px;font-family:Helvetica, sans-serif;"><I><B>IMPORTANT NOTE:</B>&nbsp;Please make payments to our new Bank Account as&nbsp;of 01/10/2019.</I></a>-->
+                    </td>
+                    <td class="td_padding footer_table_style left_border right_border td_bg_color">
+                        Amount due
+                    </td>
+                    <td class="td_padding footer_table_style left_border right_border td_bg_color" align="right">
+                        <apex:outputField value="{!Sales_Invoice__c.Total_Inc_VAT__c}"/>
+                    </td>
+                    
+                </tr>
+            </table>            
+            
+            <table width="100%" border="0" height="90px" class="childTable">
+                <tr valign="baseline"> <td width="71%"><p style="color:#414141;font-size:10px;font-family:Helvetica, sans-serif;">
+                    All goods remain the property of the vendor until paid for in full.<br/>
+                    Written Notification must be received within 7 days of receipt for shortages<br/>
+                    or 20 days of invoice for non-delivery.<br/>
+                    Full conditions of sale on application
+                    </p></td> <td width="33%"><p style="color:#414141;font-size:10px;font-family:Helvetica, sans-serif;">Nett 30 days to approved account.<br/>
+                    See terms and conditions overleaf.</p> 
+                    <p style="font-size:12.5px;color:red;font-family:Helvetica, sans-serif;">
+                        Payment due:
+                        <apex:outputPanel ><apex:outputText value="{0,date,dd MMM yyyy}">
+                            <apex:param value="{!Sales_Invoice__c.Payment_Due_Date__c}" />
+                            </apex:outputText></apex:outputPanel>
+                    </p> </td> 
+                </tr>
+                <tr><td colspan="2" style="display:table-cell; vertical-align: middle;color:#414141;font-size:10px;"><p style="font-size:13px; margin-top:-10px">
+                    STQ Vantage Limited   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   VAT No: GB 331 3916 22   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Bank A/C No.: 2250 0081 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Sort Code: 60-24-37</p>
+                    
+                    </td></tr>
+                
+            </table>
+        </div> <!-- Content-->
+        
+    </div>
+</apex:component>
