@@ -1,0 +1,389 @@
+<apex:page standardController="Quote__c" renderAs="pdf" showHeader="false" 
+           sidebar="false" 
+           standardStylesheets="false" 
+           applyBodyTag="false" 
+           applyHtmlTag="false">
+    <head>
+        <style>
+            
+            thead{display: table-header-group;}
+            tfoot{display: table-footer-group;}
+            .table1 {-fs-table-paginate: paginate;}                     
+            th.tt{               
+            border-right:1px solid #ABC12D;
+            height:100%;
+            text-align:center;
+            font-family:Helvetica, sans-serif;
+            }
+            td.ht{
+            border-right: 1px solid #ABC12D;
+            font-family:Helvetica, sans-serif;
+            text-align:left;
+            }
+            .padd{
+            font-size:14.5px;
+            font-family:Helvetica, sans-serif;
+            
+            }
+            .padd ws{
+            font-size:14.5px;
+            font-family:Helvetica, sans-serif;
+            color:#93B41D;
+            }
+            .paadd{
+            font-size:12.5px;
+            font-family:Helvetica, sans-serif;
+            }
+            .paadd hd{
+            font-size:12.5px;
+            font-family:Helvetica, sans-serif;
+            color:#ABC14D;
+            }
+            @page:first { 
+            background-color:white;         
+            @top-center {                   
+            content: element(header);               
+            }
+            @bottom-left {
+            content: element(footer);
+            }           
+            }      
+            
+            @page last_page {
+            @bottom-left {
+            content: none;
+            }
+            }
+            
+            
+            
+            
+            .table2 td,
+            .table2 th {
+            border:none;
+            border:bottom:none;
+            align:center;
+            padding:5px;
+            table-layout: auto;
+            
+            
+            }  
+            
+            
+            
+            
+            
+            
+            
+            #page{padding-bottom: 10px;}
+            
+            div.header { 
+            padding: -5px 10px 0 10px; 
+            
+            position: running(header);           
+            }  
+            /*div#footer {
+            /* padding:0px;position: running(footer); */
+            display:flex;       
+            align-items:flex-end;                 
+            }*/
+            
+            div#footer  { 
+            width:100mm;
+            margin:0 15mm;
+            padding-bottom:10px; }                      
+            div#content{
+            height:auto;
+            }     
+            
+            .last-page {
+            page: last_page;
+            }
+            img {
+            opacity: 0.8;
+            filter: alpha(opacity=80); /* For IE8 and earlier */
+            }
+            
+            .verticalLine {
+            border-left: 2px solid #ABC12D;position:absolute;left:10px;top:415px;height:400px;
+            }          
+            .dailyWorkColumn1 {   width: 700px; height: 510px;  position: absolute;   left: 7px; top: auto; }
+            
+            
+            div{
+            font-size:12px;
+            } 
+            
+            
+        </style>
+    </head>
+    <apex:stylesheet value="{!$Resource.QuotesPreviewCss}"/>
+    <div class="header" >
+        <apex:image url="/resource/1466142737000/QuotesLogo" /> 
+        <div style="position:absolute;left:450px;top:40px;">
+            <p class="padd"> 28 Buckland Road, Pen Mill Trading Estate Yeovil, Somerset BA21 5HA <br/>T: 01935 474602  contracts@stqvantage.co.uk <br/><ws> <b>www.stqvantage.co.uk</b></ws> </p>
+            <b style="  font-family: Helvetica, sans-serif;
+                      font-size: 19.5px;
+                      text-align: left;
+                      display: block;
+                      margin-left:-4px;
+                      width: fit-content;">Quotation</b>
+        </div> 
+        
+    </div>
+    <br/><br/><br/><br/><br/><br/><br/>
+    <table  border="0" width="100%" height="100%" style="font-size:13.5px;font-family:Helvetica, sans-serif;">
+        <tr valign="baseline">
+            <td style="font-family:Helvetica, sans-serif;width:230px;">
+                <b style="color:#93B41D;" class="padd">Account Address:</b></td>
+            <td style="font-family:Helvetica, sans-serif;width:250px;">
+                <b style="color:#93B41D;" class="padd"> Site Address:</b></td>
+            <td style="text-align:left;font-size:14.5px;width:130px;" valign="top"><b>Our ref :</b></td><td style="text-align:left;font-size:13.5px;width:10px;" valign="top"></td>
+            <td style="text-align:left;font-size:14.5px;width:130px;" valign="top">{!Quote__c.Name}</td>
+        </tr>
+        <tr valign="top">
+            <td rowspan="4" style="font-family:Helvetica, sans-serif;" class="padd">
+                <apex:outputPanel rendered="{!if(Quote__c.Account__r.Name!=null,true,false)}"><apex:outputText value="{!Quote__c.Account__r.Name}"></apex:outputText><br/></apex:outputPanel>
+                <apex:outputPanel rendered="{!if(Quote__c.Account__r.ShippingStreet!=null,true,false)}"><apex:outputField value="{!Quote__c.Account__r.ShippingStreet}"/><br/></apex:outputPanel>
+                <apex:outputPanel rendered="{!if(Quote__c.Account__r.ShippingCity!=null,true,false)}"><apex:outputText value="{!Quote__c.Account__r.ShippingCity}"></apex:outputText><br/></apex:outputPanel>
+                <apex:outputPanel rendered="{!if(Quote__c.Account__r.ShippingState!=null,true,false)}"><apex:outputText value="{!Quote__c.Account__r.ShippingState}"></apex:outputText><br/></apex:outputPanel>
+                <apex:outputPanel rendered="{!if(Quote__c.Account__r.ShippingPostalCode!=null,true,false)}"><apex:outputText value="{!Quote__c.Account__r.ShippingPostalCode}"></apex:outputText><br/></apex:outputPanel>
+            </td>
+            <td rowspan="4" style="font-family:Helvetica, sans-serif;" class="padd">
+                <apex:outputpanel rendered="{!if(Quote__c.Activity__r.Property__r.Name!=null,true,false)}" ><apex:outputText value="{!Quote__c.Activity__r.Property__r.Name}"></apex:outputText><br/></apex:outputpanel>
+                <apex:outputpanel rendered="{!if(Quote__c.Activity__r.Property__r.Street__c!=null,true,false)}"><apex:outputField value="{!Quote__c.Activity__r.Property__r.Street__c}"/><br/></apex:outputpanel>
+                <apex:outputPanel rendered="{!if(Quote__c.Activity__r.Property__r.Town_City__c!=null,true,false)}"><apex:outputText value="{!Quote__c.Activity__r.Property__r.Town_City__c}"></apex:outputText><br/></apex:outputPanel>
+                <apex:outputPanel rendered="{!if(Quote__c.Activity__r.Property__r.Postcode__c!=null,true,false)}"><apex:outputText value="{!Quote__c.Activity__r.Property__r.Postcode__c}"></apex:outputText><br/></apex:outputPanel>
+                
+                <apex:outputpanel rendered="{!if(Quote__c.Activity__r.Property__r.Name==null,true,false)}" ><apex:outputText value="{!Quote__c.Opportunity__r.Property__r.Name}"></apex:outputText><br/></apex:outputpanel>
+                <apex:outputpanel rendered="{!if(Quote__c.Activity__r.Property__r.Street__c==null,true,false)}"><apex:outputField value="{!Quote__c.Opportunity__r.Property__r.Street__c}"/><br/></apex:outputpanel>
+                <apex:outputPanel rendered="{!if(Quote__c.Activity__r.Property__r.Town_City__c==null,true,false)}"><apex:outputText value="{!Quote__c.Opportunity__r.Property__r.Town_City__c}"></apex:outputText><br/></apex:outputPanel>
+                <apex:outputPanel rendered="{!if(Quote__c.Activity__r.Property__r.Postcode__c==null,true,false)}"><apex:outputText value="{!Quote__c.Opportunity__r.Property__r.Postcode__c}"></apex:outputText><br/></apex:outputPanel>
+                
+            </td>
+            
+            
+            
+            <tr><td style="text-align:left;font-size:14.5px;" >Contact :</td><td></td><td>{!Quote__c.Contact__r.Name}</td></tr>
+        <tr><td style="text-align:left;font-size:14.5px;" valign="top"  width="50px">Telephone :</td><td style="text-align:left;font-size:13.5px;" valign="top"></td>
+            <td>
+                <apex:outputText rendered="{!if(Quote__c.Phone_Number__c!=null,true,false)}" value="{!Quote__c.Phone_Number__c}"></apex:outputText>
+                <apex:outputPanel rendered="{!if(AND(Quote__c.Phone_Number__c!=null,Quote__c.Mobile__c!=null),true,false)}"><br/></apex:outputPanel>
+                <apex:outputText rendered="{!if(Quote__c.Mobile__c!=null,true,false)}" value="{!Quote__c.Mobile__c}"></apex:outputText>
+                <apex:outputText rendered="{!if(AND(Quote__c.Phone_Number__c==null,Quote__c.Mobile__c==null),true,false)}">{!Quote__c.Account__r.Phone}</apex:outputText>
+                
+            </td></tr>
+        <tr>
+            <td style="text-align:left;font-size:14.5px;" valign="top">Date :</td><td style="text-align:left;font-size:13.5px;" valign="top"></td>
+            <td style="text-align:left;font-size:14.5px;" valign="top">
+                <apex:outputText value="{0,date,dd MMMM yyyy}">
+                    <apex:param value="{!Quote__c.Createddate}" />
+                </apex:outputText>
+            </td>
+        </tr>  
+    </tr>          
+</table>
+<br/>
+
+<div id="content">
+    <apex:outputText rendered="{!IF(Quote__c.recordtype.name=='Include Price Per',true,false)}">
+          <div class="dailyWorkColumn1">
+                <div  style="border-left: 1px solid #ABC12D;position:absolute;left:1px;top:1px;height:570px;"> </div>
+              <!--  <div  style="border-left: 1px solid #ABC12D;position:absolute;left:40px;top:1px;height:570px;"> </div>-->
+                <div  style="border-left: 1px solid #ABC12D;position:absolute;left:450px;top:1px;height:570px;"> </div>
+                <div  style="border-left: 1px solid #ABC12D;position:absolute;left:533px;top:1px;height:570px;"> </div>
+                <div  style="border-left: 1px solid #ABC12D;position:absolute;left:617px;top:1px;height:570px;"> </div>
+                <div  style="border-left: 1px solid #ABC12D;position:absolute;left:701px;top:1px;height:570px;"> </div>
+ </div>
+          
+  
+        <table class="table2" border="0" style="font-size:12px;font-family:Helvetica, sans-serif;border-collapse:collapse;table-layout: fixed; width: 700px;" cellspacing="0" cellpadding="3" width="100%">
+            <thead>
+              <!--   <th width="1px" class="tt" style="border-left: 1px solid #ABC12D;text-align:left;font-size:15px;border-top: 1px solid #ABC12D;border-bottom: 1px solid #ABC12D">Qty</th> -->
+                <th width="195px" colspan="2" class="tt" style="text-align:left;font-size:15px;border-left: 1px solid #ABC12D;border-right: 1px solid #ABC12D;border-bottom: 1px solid #ABC12D;border-top: 1px solid #ABC12D;">Description</th>
+                <th width="35px" class="tt" style="border-left: 1px solid #ABC12D;text-align:left;font-size:15px;border-top: 1px solid #ABC12D;border-bottom: 1px solid #ABC12D">Price</th> 
+                <th width="35px" class="tt" style="border-left: 1px solid #ABC12D;text-align:left;font-size:15px;border-top: 1px solid #ABC12D;border-bottom: 1px solid #ABC12D">Per</th> 
+                <th width="35px" class="tt" style="text-align:left;font-size:15px;border-left: 1px solid #ABC12D;border-top: 1px solid #ABC12D;border-bottom: 1px solid #ABC12D;border-right: 1px solid #ABC12D;"><apex:outputText value="£"></apex:outputText></th>
+            </thead>
+            <tbody>   
+                <apex:variable var="count" value="{!0}" />
+                <apex:repeat value="{!Quote__c.Quote_Line_Items__r}" var="qli"> 
+                    <tr valign="baseline" class="childTable" style="height:7px;">              
+                     <!--   <td class="ht" valign="top" style="text-align:center;border-left: 1px solid #ABC12D;padding:0px;font-size:14.5px;"><apex:outputText rendered="{!if(AND(qli.Service_Types__c!=null,qli.Item__r.name==null,qli.Goods_Services__c==null),true,false)}"><br/></apex:outputText><apex:outputText rendered="{!if(AND(qli.Service_Types__c==null,qli.Item__r.name!=null,qli.Goods_Services__c!=null),true,false)}"></apex:outputText><apex:outputText rendered="{!if(OR(AND(qli.Service_Types__c!=null,qli.Item__r.name!=null,qli.Goods_Services__c==null),AND(qli.Service_Types__c!=null,qli.Item__r.name==null,qli.Goods_Services__c!=null)),true,false)}"><br/><br/><br /></apex:outputText><apex:outputText rendered="{!IF(AND(qli.Service_Types__c!=null,qli.Item__r.name!=null,qli.Goods_Services__c!=null),true,false)}"><br/><br/><br /></apex:outputText><apex:outputField value="{!qli.Quantity__c}"/></td> 
+                        <!-- <td class="ht" valign="top" style="text-align:center;border-left: 1px solid #ABC12D;" ><apex:outputText rendered="{!if((qli.Item__r.name!=null),true,false)}"><br/><br/></apex:outputText><apex:outputText rendered="{!IF(AND(qli.Item__r.name==null,qli.Goods_Services__c!=null),true,false)}"><br/><br/><br/></apex:outputText><apex:outputField value="{!qli.Quantity__c}"/> </td> -->
+                        
+                        <td class="ht"  valign="top" colspan="2" style="text-align:left;border-left: 1px solid #ABC12D;border-right: 1px solid #ABC12D;padding:0px;">
+                            
+                            <apex:outputText rendered="{!IF(qli.Service_Types__c!=null,true,false)}" > <p style="text-align:center;font-family:Helvetica, sans-serif;height:1px;font-size:14.5px"><b>{!qli.Service_Types__c}</b></p><br /></apex:outputText>
+                            <apex:outputText rendered="{!IF(qli.Item__c!=null,true,false)}" > <b style="font-family:Helvetica, sans-serif;font-size:14.5px">{!IF((qli.Item__r.name!=null),qli.Item__r.name+":","")}</b><br /></apex:outputText>
+                            <apex:outputText rendered="{!if(qli.Include_Information__c,true,false)}" value="{!SUBSTITUTE((qli.Item__r.Description),'\n','<br/>')}" style="white-space:  pre-wrap; font-size:14.5px;line-Height:135%; " escape="false"></apex:outputText>
+                            <apex:outputText rendered="{!if(AND(qli.Goods_Services__c!=null,qli.Item__r.Description!=null,qli.Include_Information__c),true,false)}" value=" - "></apex:outputText>
+                            <apex:outputtext value="{!SUBSTITUTE((qli.Goods_Services__c),'\n','<br/>')}" style="white-space:  pre-wrap;font-size:14.5px;line-height:135%; " escape="false"></apex:outputText>
+                            
+                            <td class="ht" style="text-align:center;border-left: 1px solid #ABC12D;padding:0px;font-family:Helvetica, sans-serif;font-size:14.5px;" valign="bottom"><apex:outputText rendered="{!if(OR(AND(qli.Service_Types__c==null,qli.Item__r.name!=null,qli.Goods_Services__c!=null)),true,false)}"><br/></apex:outputText><apex:outputText rendered="{!if(OR(AND(qli.Service_Types__c!=null,qli.Item__r.name!=null,qli.Goods_Services__c==null),AND(qli.Service_Types__c!=null,qli.Item__r.name==null,qli.Goods_Services__c!=null)),true,false)}"><br/><br/></apex:outputText><apex:outputText rendered="{!IF(AND(qli.Service_Types__c!=null,qli.Item__r.name!=null,qli.Goods_Services__c!=null),true,false)}"><br/><br/></apex:outputText><apex:outputPanel rendered="{!if(AND(qli.Each_Item__c==true,qli.Value__c!=0),true,false)}"><apex:outputfield value="{!qli.Value__c}"/></apex:outputPanel></td>            
+                        
+                        <td class="ht" style="text-align:center;border-left: 1px solid #ABC12D;padding:0px;font-family:Helvetica, sans-serif;font-size:14.5px;" valign="bottom"><apex:outputText rendered="{!if(OR(AND(qli.Service_Types__c==null,qli.Item__r.name!=null,qli.Goods_Services__c!=null)),true,false)}"><br/></apex:outputText><apex:outputText rendered="{!if(OR(AND(qli.Service_Types__c!=null,qli.Item__r.name!=null,qli.Goods_Services__c==null),AND(qli.Service_Types__c!=null,qli.Item__r.name==null,qli.Goods_Services__c!=null)),true,false)}"><br/><br/></apex:outputText><apex:outputText rendered="{!IF(AND(qli.Service_Types__c!=null,qli.Item__r.name!=null,qli.Goods_Services__c!=null),true,false)}"><br/><br/></apex:outputText><apex:outputPanel rendered="{!if((qli.Each_Item__c==true),true,false)}"><apex:outputField value="{!qli.Per__c}"/></apex:outputPanel></td>          
+                        <td class="ht" style="text-align:right;border-right: 1px solid #ABC12D;border-left: 1px solid #ABC12D;padding:0px;font-family:Helvetica, sans-serif;font-size:14.5px;" valign="bottom"><apex:outputText rendered="{!if(OR(AND(qli.Service_Types__c==null,qli.Item__r.name!=null,qli.Goods_Services__c!=null)),true,false)}"><br/></apex:outputText><apex:outputText rendered="{!if(OR(AND(qli.Service_Types__c!=null,qli.Item__r.name!=null,qli.Goods_Services__c==null),AND(qli.Service_Types__c!=null,qli.Item__r.name==null,qli.Goods_Services__c!=null)),true,false)}"><br/><br/></apex:outputText><apex:outputText rendered="{!IF(AND(qli.Service_Types__c!=null,qli.Item__r.name!=null,qli.Goods_Services__c!=null),true,false)}"><br/><br/></apex:outputText><apex:outputPanel rendered="{!if(qli.Totals__c!=0,true,false)}"><apex:outputfield value="{!qli.Totals__c}"/></apex:outputPanel></td>            
+                    </td>
+            </tr>
+        <apex:variable var="count" value="{!count+1}" />
+    </apex:repeat>
+</tbody>
+</table>
+</apex:outputText> 
+
+<apex:outputText rendered="{!IF(Quote__c.recordtype.name=='Exclude Price Per',true,false)}">
+         <div class="dailyWorkColumn1">
+               <div  style="border-left: 1px solid #ABC12D;position:absolute;left:1px;top:1px;height:545px;"> </div>
+                                <!--line 2 -->
+                <!-- <div  style="border-left: 1px solid #ABC12D;position:absolute;left:39px;top:1px;height:545px;"> </div>-->
+                <!-- <div  style="border-left: 1px solid #ABC12D;position:absolute;left:39px;top:1px;height:545px;"> </div>
+                <!--line 3 -->
+                <div  style="border-left: 1px solid #ABC12D;position:absolute;left:538px;top:1px;height:545px;"> </div>
+                                <!--line 4 -->
+                <div  style="border-left: 1px solid #ABC12D;position:absolute;left:700px;top:1px;height:545px;"> </div>
+ </div>
+    <table class="table2" border="0" style="font-size:12px;font-family:Helvetica, sans-serif;border-collapse:collapse; width: 700px;" cellspacing="0" cellpadding="3" width="100%">
+        
+        <thead>
+        <!--    <th width="15%" class="tt" style="border-top: 1px solid #ABC12D;border-left: 1px solid #ABC12D;text-align:left;font-size:15px;border-bottom: 1px solid #ABC12D;border-right: 1px solid #ABC12D;">Qty</th>-->
+            <th width="76%" colspan="2" class="tt" style="text-align:left;font-size:15px;border-left: 1px solid #ABC12D;border-right: 1px solid #ABC12D;border-bottom: 1px solid #ABC12D;border-top: 1px solid #ABC12D;">Description</th>
+            
+            <th width="23%" class="tt" style="text-align:left;font-size:15px; border-top: 1px solid #ABC12D;border-bottom: 1px solid #ABC12D;border-right: 1px solid #ABC12D;"><apex:outputText value="£"></apex:outputText></th>
+        </thead>
+        <tbody> 
+            
+            <apex:variable var="count" value="{!0}" />
+            <apex:repeat value="{!Quote__c.Quote_Line_Items__r}" var="qli" > 
+                <tr valign="baseline" class="childTable" style="height:7px;border-bottom: none;">            
+                   <!-- <td class="ht" valign="top" style="text-align:center;border-left: 1px solid #ABC12D;padding:0px;font-size:14.5px;"><apex:outputText rendered="{!if(AND(qli.Service_Types__c!=null,qli.Item__r.name==null,qli.Goods_Services__c==null),true,false)}"><br/></apex:outputText><apex:outputText rendered="{!if(AND(qli.Service_Types__c==null,qli.Item__r.name!=null,qli.Goods_Services__c!=null),true,false)}"></apex:outputText><apex:outputText rendered="{!if(OR(AND(qli.Service_Types__c!=null,qli.Item__r.name!=null,qli.Goods_Services__c==null),AND(qli.Service_Types__c!=null,qli.Item__r.name==null,qli.Goods_Services__c!=null)),true,false)}"><br/><br/><br /></apex:outputText><apex:outputText rendered="{!IF(AND(qli.Service_Types__c!=null,qli.Item__r.name!=null,qli.Goods_Services__c!=null),true,false)}"><br/><br/><br /></apex:outputText><apex:outputField value="{!qli.Quantity__c}"/></td>
+                    <!-- <td class="ht" valign="top" style="text-align:center;border-left: 1px solid #ABC12D;" ><apex:outputText rendered="{!if((qli.Item__r.name!=null),true,false)}"><br/><br/></apex:outputText><apex:outputText rendered="{!IF(AND(qli.Item__r.name==null,qli.Goods_Services__c!=null),true,false)}"><br/><br/><br/></apex:outputText><apex:outputField value="{!qli.Quantity__c}"/> </td> -->
+                    <td class="ht"  valign="top" colspan="2" style="text-align:left;padding:0px;border-left: 1px solid #ABC12D;border-right: 1px solid #ABC12D;">
+                        <apex:outputText rendered="{!IF(qli.Service_Types__c!=null,true,false)}" > <p style="text-align:center;font-family:Helvetica, sans-serif;height:1px;font-size:14.5px"><b>{!qli.Service_Types__c}</b></p><br /></apex:outputText>
+                        <apex:outputText rendered="{!IF(qli.Item__c!=null,true,false)}" > <b style="font-family:Helvetica, sans-serif;font-size:14.5px">{!IF((qli.Item__r.name!=null),qli.Item__r.name+":","")}</b><br /></apex:outputText>
+                        <apex:outputText rendered="{!if(qli.Include_Information__c,true,false)}" value="{!SUBSTITUTE((qli.Item__r.Description),'\n','<br/>')}" style="white-space:  pre-wrap;font-size:14.5px;line-Height:125%; " escape="false"></apex:outputText>
+                        <apex:outputText rendered="{!if(AND(qli.Goods_Services__c!=null,qli.Item__r.Description!=null,qli.Include_Information__c),true,false)}" value=" - "></apex:outputText>
+                        <apex:outputtext rendered="{!if(qli.Include_Information__c,true,false)}"  value="{!SUBSTITUTE((qli.Goods_Services__c),'\n','<br/>')}" style="white-space:  pre-wrap;font-size:14.5px;line-Height:125%; " escape="false"></apex:outputText>                
+                    </td>
+                    <td class="ht" style="font-family:Helvetica, sans-serif;border-right: 1px solid #ABC12D;text-align:right;font-size:14.5px;"  valign="bottom"><apex:outputText rendered="{!if(OR(AND(qli.Service_Types__c==null,qli.Item__r.name!=null,qli.Goods_Services__c!=null)),true,false)}"><br/></apex:outputText><apex:outputText rendered="{!if(OR(AND(qli.Service_Types__c!=null,qli.Item__r.name!=null,qli.Goods_Services__c==null),AND(qli.Service_Types__c!=null,qli.Item__r.name==null,qli.Goods_Services__c!=null)),true,false)}"><br/><br/></apex:outputText><apex:outputText rendered="{!IF(AND(qli.Service_Types__c!=null,qli.Item__r.name!=null,qli.Goods_Services__c!=null),true,false)}"><br/><br/></apex:outputText><apex:outputPanel rendered="{!if(qli.Totals__c!=0,true,false)}"><apex:outputfield value="{!qli.Totals__c}"/></apex:outputPanel></td>            
+                </tr>
+                <apex:variable var="count" value="{!count+1}" />
+            </apex:repeat>
+        </tbody>
+    </table>
+    
+</apex:outputText> 
+</div>
+<br/>
+<br/>
+
+
+
+<div class="footer" style="font-family:sans-serif,arial;">	
+    <div id="content">	
+        <table width="99%">	
+            <apex:outputText rendered="{!IF(Quote__c.recordtype.name=='Include Price Per',true,false)}">	
+                <tr>	
+                    <td width="58%"> </td>	
+                    <td width="23%" style="text-align:left;border-right:  1px solid #ABC12D;font-size:16px;border-left:  1px solid #ABC12D;">	
+                        &nbsp;&nbsp;&nbsp;<b>Carriage</b>	
+                    </td>	
+                    <td width="55%" style="border-right: 1px solid #ABC12D;text-align:right;font-family: sans-serif,arial;font-size:15px;">	
+                        <p><apex:outputfield value="{!Quote__c.CARRIAGE__c}"/></p>	
+                        <tr>	
+                            <td width="58%"></td>	
+                            <td width="19%" style="text-align:left;background-color:#EEF3D5;border-right:  1px solid #ABC12D;font-size:16px;border-left:  1px solid #ABC12D;"><b>&nbsp;&nbsp;&nbsp;Total</b></td>	
+                            <td width="55%" style="text-align:right;background-color:#EEF3D5;border-right: 1px solid #ABC12D;font-size:16px;"><b><apex:outputfield value="{!Quote__c.Total_Amount__c}"/></b></td>	
+                        </tr>	
+                    </td>	
+                </tr>	
+            </apex:outputText>	
+            <apex:outputText rendered="{!IF(Quote__c.recordtype.name=='Exclude Price Per',true,false)}">	
+                <tr>	
+                    <td width="54%"> </td>	
+                    <td width="23%" style="text-align:left;border-right:  1px solid #ABC12D;font-size:16px;border-left:  1px solid #ABC12D;">	
+                        &nbsp;&nbsp;&nbsp;<b>Carriage</b>	
+                    </td>	
+                    <td width="55%" style="border-right: 1px solid #ABC12D;text-align:right;font-family:sans-serif,Arial;font-size:15px;">	
+                        <p><apex:outputfield value="{!Quote__c.CARRIAGE__c}"/></p>	
+                        <tr>	
+                            <td width="54%"></td>	
+                            <td width="19%" style="text-align:left;background-color:#EEF3D5;border-right:  1px solid #ABC12D;font-size:16px;border-left:  1px solid #ABC12D;"><b>&nbsp;&nbsp;&nbsp;Total</b></td>	
+                            <td width="55%" style="text-align:right;background-color:#EEF3D5;border-right: 1px solid #ABC12D;font-size:16px;"><b><apex:outputfield value="{!Quote__c.Total_Amount__c}"/></b></td>	
+                        </tr>	
+                    </td>	
+                </tr>	
+            </apex:outputText>	
+        </table>
+    </div>
+    <div  style="font-size:11px;font-family:Helvetica, sans-serif;">
+        Subject to our standard Terms Conditions of Sale, available on request.<br/>
+        <b>Excludes VAT which will be added at the prevailing rate</b><br/>    
+        This quotation is valid for a period of 30 days <br/> <br/> </div>
+    <div style="font-size:9px;font-family:Helvetica, sans-serif; margin-top:-10px">
+        STQ Vantage Limited   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   VAT No: GB 331 3916 22   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Bank A/C No.: 2250 0081 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  Sort Code: 60-24-37
+    </div>
+</div>
+
+
+<div class="last-page">         
+    
+    <center>
+        TERMS &amp; CONDITIONS OF TRADING <br/>
+        <b>STQ Vantage Limited</b>  <br/>   
+    </center>
+    <br/>
+    <br/>  <br/>
+    <div style="width: 44%; float:left">
+        <b>1. THE CONTRACT</b> <br/>
+        1.1. For the purposes of this contract hereafter the Partners trading as STQ Vantage Limited will be described as the “Supplier” and the entity placing an order shall be described as the “Client”.<br/>
+        1.2. There can be no variance to these Terms and Conditions of Trading (the Contract) whatsoever unless varied in writing and signed by a Director of the Supplier.<br/>
+        1.3. The placing of a signed order by a Client shall be deemed acceptance in their entirety of these Terms and Conditions of Trading. Any subsequent verbal orders will be bound by these Terms.<br/> 
+        <b>2. DELIVERY</b><br/>
+        
+        2.1. All Dates given by the Supplier for delivery are estimated dates only and therefore the Supplier shall incur no liability for any loss or damage whatsoever as a result of a failure to adhere to any such dates.<br/>
+        2.2. The Supplier shall be entitled to make partial deliveries, invoice for goods delivered and expect payment in accordance with their terms of payment.<br/>
+        2.3. All goods supplied for destinations outside the United Kingdom and Eire are sold ex-works. Acceptance by a carrier on behalf of the Client shall constitute delivery of the goods, and insurance and risk liability shall pass to the Client at this point.<br/>
+        
+        <b>3. PRICES</b><br/>
+        
+        3.1. All prices quoted are exclusive of V.A.T. and are subject to the prevailing rate of V.A.T. at the date of invoice. All prices quoted apply to a specific order only and are subject to change, without prior notification.<br/>
+        3.2. The Supplier reserves the right to impose a delivery charge at its discretion.<br/>
+        
+        <b> 4. TERMS OF PAYMENT</b><br/>
+        4.1. The Supplier demands Payment on Delivery of goods or at the Suppliers discretion within 30 days of the invoice date. These payment terms shall apply at all times unless varied by the Supplier.  Settlement discounts agreed by the Supplier may only be applied to the value of goods invoiced and not the V.A.T. element.<br/>
+        4.2. All remittances received will be allocated to invoices and credited to the Clients account in chronological order.<br/>
+        4.3. All amounts overdue for payment due to the Supplier shall bear interest at the rate of 3% above bank base rate per month or part thereof for the period from the date of invoice to the date of payment. (Such penalty shall apply regardless as to whether Judgment in a Court of Law has been obtained).<br/> 
+        
+        <b>5. TITLE AND RISK</b><br/>
+        5.1. Risk and therefore responsibility for insurance of all items supplied shall pass to the Client upon deliver.<br/>
+        5.2. Title of items supplied by the supplier does not pass until all outstanding amounts due to the Supplier, for any reason whatsoever, have been settled in full including any penalties for late payment accruing under these Terms or a varied by Government Legislation whichever is higher.<br/>
+        5.3. In the event of the Supplier having any indication of the Client being unable to settle its accounts as and when they fall due, notwithstanding any other remedies, all amounts due to the Supplier shall become payable in full immediately. In addition to the Supplier reserves the right to uplift goods to mitigate amounts due to it and shall assess such goods and credit such values as it deems reasonable.<br/>
+    </div>  
+    <div Style="width: 48%; float:right">
+        <b>6. WARRANTY</b><br/>
+        
+        6.1 The Supplier warrants that all goods supplied are to the best of their knowledge of merchantable quality, are free of any defects due to materials,design or workmanship and conform to all current relevant Safety Standards legislation. It is the responsibility of the Client to ensure that all goods supplied are used in a correct manner (including relevant legislation) and for the correct purpose. Where the Client passes goods to a third party it is the responsibility of the Client to ensure that all information relating to storage, use, purpose, and other relevant items are passed to the third party. The Supplier has no liability whatsoever for the misuse of goods supplied.<br/>    
+        6.2. It is incumbent upon the Client to inspect all goods supplied upon delivery for damaged or wrongly delivered goods.<br/>
+        6.3. The Supplier will only entertain claims by the Client for damaged or wrongly delivered goods if identified within 7 days and returned within 21 days of the delivery date. Such claims must be acknowledged as received in writing by the Supplier. (Time is of the essence of this clause).<br/>
+        6.4. Should the Supplier accept the validity of any claim, liability shall be limited to replacement or repair of such items. The method of settlement for any claim is at the discretion of the Supplier. No third party claims will be entertained.<br/>
+        6.5. The Supplier reserves the right to make alterations in design, colour finish or content of the goods sold from the samples shown.<br/>
+        6.6. The Supplier at all times reserves the right, notwithstanding any other remedies available to it, to refuse to supply and/or suspend further deliveries and/or stop goods in transit of fulfil any other obligations of this contract without having to give a reason, where the Client fails to fulfil any obligations under this contract.<br/>
+        <b>7. LIABILITY</b><br/>
+        
+        
+        7.1. In the event of insolvency, liquidation receivership or bankruptcy not withstanding any other remedies available to the Supplier clauses 5.2 and 5.3 of this contract apply.<br/>
+        7.2. Details of short delivery must be notified in writing to the Supplier within 7 days of the date of delivery. The supplier has no liability to the Client for consequential loss whatsoever due to short or incomplete deliveries.<br/>
+        7.3. The Client will be responsible for any errors in goods supplied where the Supplier has supplied goods to the Clients own specifications, material, and measurement.<br/>
+        7.4. The Supplier shall not be held responsible to the Client and therefore has no liability to the Client whatsoever for any non-performance whatsoever in whole or in part of its obligations as conferred under the Terms of this contract for any reason or cause beyond its control.<br/> 
+        
+        <b>8.  CANCELLATION</b><br/>
+        
+        8.1. The Client, without any liability, may cancel any order within seven days of the ordered date. Such notice must be sent by recorded delivery unless varied in writing by the Supplier. Any notice of cancellation beyond seven days of the order date may be accepted by the Supplier and will attract a penalty invoice for 50% of the value of the cancelled order.<br/>  
+        <b>9. DATA PROTECTION</b><br/>
+        9.1. The Client by placing an order or requesting and Account and/or Credit facility gives permission to the Supplier, where it feels appropriate, to undertake credit vetting procedures which may include using third party information. All information received by such sources shall be held in confidence by the Supplier and not passed on to any other third party.<br/>
+        <b>10. LAW</b><br/>
+        10.1. This agreement is governed by the Laws of England and Wales. <br/>       
+    </div> 
+</div> 
+</apex:page>
